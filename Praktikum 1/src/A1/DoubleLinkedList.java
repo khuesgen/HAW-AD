@@ -7,44 +7,91 @@ package A1;
  * @author Kevin Hüsgen
  *
  */
-public class DoubleLinkedList<E> implements IList<E>{
-	
+public class DoubleLinkedList<E> implements IList<E> {
+
+	// Referenziert den Anfang der Liste
 	private Link head;
+
+	// Referenziert das Ende der Liste
 	private Link tail;
-	
+
+	// Länge der Liste
+	private int length;
+
 	public DoubleLinkedList() {
-			head = null;
-			tail = null;
+		head = null;
+		tail = null;
+		length = 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#getLength()
 	 */
 	@Override
 	public int getLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return length;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#insertAt(int, java.lang.Object)
 	 */
 	@Override
 	public void insertAt(int index, Object elem) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+
+		Link temp = new Link((E) elem);
+
+		if (index > length || index < 0) {
+			throw new IllegalArgumentException();
+		}
+
+		if (length == 0) {
+			this.head = temp;
+			this.tail = temp;		
+		} else if ( index == length) {		
+			tail.setNext(temp);
+			this.tail = temp;
+		} else if (index == 0) {
+			Link oldPosition = head;
+			
+			this.head = temp;
+			this.head.setNext(oldPosition);
+			
+			oldPosition.setPrevious(temp);
+			
+		} else {
+			Link oldPosition = getLink(index);
+			Link oldPositionPrevious = oldPosition.getPrevious();
+			
+			
+			temp.setPrevious(oldPositionPrevious);		
+			temp.setNext(oldPosition);
+			
+			oldPosition.setPrevious(temp);
+			
+		}
+			
+		length++;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#deleteAt(int)
 	 */
 	@Override
 	public void deleteAt(int index) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
+		length--;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#getElem(int)
 	 */
 	@Override
@@ -53,16 +100,22 @@ public class DoubleLinkedList<E> implements IList<E>{
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#clear()
 	 */
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.head = null;
+		this.tail = null;
+
+		length = 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#concat(A1.IList)
 	 */
 	@Override
@@ -71,7 +124,9 @@ public class DoubleLinkedList<E> implements IList<E>{
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see A1.IList#extract(int, int)
 	 */
 	@Override
@@ -79,15 +134,68 @@ public class DoubleLinkedList<E> implements IList<E>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Link getLink(int i) {
+		Link akt = head;
+
+		for (int y = 0; y < i; y++) {
+			akt = akt.next;
+		}
+
+	   return akt;
+	}
 	
-	class Link{
+	public String toString() {
+		
+		String toString = "";
+		
+		for (int i = 0; i < length; i++) {
+			toString += getLink(i).getValue() + " -> ";
+		}
+		
+		return toString;
+	}
+
+	class Link {
+
 		public E value;
 		public Link next;
 		public Link previous;
-		
+
+		public Link(E value, Link next, Link previous) {
+			this.value = value;
+			this.next = next;
+			this.previous = previous;
+		}
+
 		public Link(E value) {
 			this.value = value;
 		}
+
+		public E getValue() {
+			return value;
+		}
+
+		public void setValue(E value) {
+			this.value = value;
+		}
+
+		public Link getNext() {
+			return next;
+		}
+
+		public void setNext(Link next) {
+			this.next = next;
+		}
+
+		public Link getPrevious() {
+			return previous;
+		}
+
+		public void setPrevious(Link previous) {
+			this.previous = previous;
+		}
+
 	}
 
 }
