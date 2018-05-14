@@ -168,8 +168,17 @@ public class DoubleLinkedList<E> implements IList<E> {
 	 */
 	@Override
 	public IList<E> extract(int i1, int i2) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (!(i1 >= 0 && i1 < i2 && i2 < length)) {
+			throw new IllegalArgumentException();
+		}
+		
+		DoubleLinkedList<E> tempList = new DoubleLinkedList<E>();
+		for (int i = 0; i < i2; i++) {
+			tempList.insertAt(i, this.getElem(i1 + i));
+		}
+		
+		return tempList;
 	}
 
 	public Link getLink(int i) {
