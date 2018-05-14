@@ -114,8 +114,24 @@ public class DoubleLinkedList<E> implements IList<E> {
 	 */
 	@Override
 	public E getElem(int index) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (index >= length) {
+			throw new IllegalArgumentException();
+		}
+		
+		Link akt = head;
+		E value = null;
+		
+		for (int i = 0; i <= index; i++) {
+			
+			if (i == index) {
+				value =  akt.value;
+			}
+			 
+			akt = akt.next;	
+		}
+		
+		return value;
 	}
 
 	/*
