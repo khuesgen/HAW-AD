@@ -22,9 +22,14 @@ public class DoubleLinkedListTest {
 		
 		dll.insertAt(2, 150);
 		System.out.println(dll.toString());
-		
-		
-		
+		dll.deleteAt(1);
+		System.out.println(dll.toString());
+		dll.deleteAt(3);
+		System.out.println(dll.toString());
+		dll.deleteAt(0);
+		System.out.println(dll.toString());
+		dll.clear();
+		System.out.println("Empty: " + dll.toString());
 	}
 
 }
