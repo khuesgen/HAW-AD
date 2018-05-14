@@ -53,6 +53,7 @@ public class DoubleLinkedList<E> implements IList<E> {
 			this.tail = temp;		
 		} else if ( index == length) {		
 			tail.setNext(temp);
+			temp.setPrevious(tail);
 			this.tail = temp;
 		} else if (index == 0) {
 			Link oldPosition = head;
@@ -70,6 +71,7 @@ public class DoubleLinkedList<E> implements IList<E> {
 			temp.setPrevious(oldPositionPrevious);		
 			temp.setNext(oldPosition);
 			
+			oldPositionPrevious.setNext(temp);
 			oldPosition.setPrevious(temp);
 			
 		}
