@@ -23,7 +23,8 @@ public class DoubleLinkedListTest {
 		dll.insertAt(2, 150);
 		System.out.println(dll.toString());
 		
-		
+		System.out.println(dll.getElem(4));
+		System.out.println(dll.getLength());
 		
 	}
 
