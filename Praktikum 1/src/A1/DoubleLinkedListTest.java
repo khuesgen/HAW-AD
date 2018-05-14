@@ -21,10 +21,11 @@ public class DoubleLinkedListTest {
 		System.out.println(dll.getLink(2).getPrevious());
 		
 		dll.insertAt(2, 150);
+
 		System.out.println(dll.toString());
 		
-		System.out.println(dll.getElem(4));
-		System.out.println(dll.getLength());
+		IList<Integer> test = dll.extract(1,4);
+		System.out.println("Neue Liste: " + test.toString());
 		
 	}
 
