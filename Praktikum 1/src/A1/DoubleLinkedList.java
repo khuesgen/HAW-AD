@@ -50,32 +50,31 @@ public class DoubleLinkedList<E> implements IList<E> {
 
 		if (length == 0) {
 			this.head = temp;
-			this.tail = temp;		
-		} else if ( index == length) {		
+			this.tail = temp;
+		} else if (index == length) {
 			tail.setNext(temp);
 			temp.setPrevious(tail);
 			this.tail = temp;
 		} else if (index == 0) {
 			Link oldPosition = head;
-			
+
 			this.head = temp;
 			this.head.setNext(oldPosition);
-			
+
 			oldPosition.setPrevious(temp);
-			
+
 		} else {
 			Link oldPosition = getLink(index);
 			Link oldPositionPrevious = oldPosition.getPrevious();
-			
-			
-			temp.setPrevious(oldPositionPrevious);		
+
+			temp.setPrevious(oldPositionPrevious);
 			temp.setNext(oldPosition);
-			
+
 			oldPositionPrevious.setNext(temp);
 			oldPosition.setPrevious(temp);
-			
+
 		}
-			
+
 		length++;
 	}
 
@@ -86,7 +85,24 @@ public class DoubleLinkedList<E> implements IList<E> {
 	 */
 	@Override
 	public void deleteAt(int index) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		if (index >= length || index < 0) {
+			throw new IllegalArgumentException();
+		}
+
+		if (index == 0) {
+			this.head = head.getNext();
+			head.setPrevious(null);
+		} else if (index == length - 1) {
+			this.tail = tail.getPrevious();
+			tail.setNext(null);
+		} else {
+			Link oldPosition = getLink(index);
+			Link oldPositionPrevious = oldPosition.getPrevious();
+			Link oldPositionNext = oldPosition.getNext();
+			oldPositionPrevious.setNext(oldPositionNext);
+			oldPositionNext.setPrevious(oldPositionPrevious);
+		}
 
 		length--;
 	}
@@ -169,17 +185,17 @@ public class DoubleLinkedList<E> implements IList<E> {
 			akt = akt.next;
 		}
 
-	   return akt;
+		return akt;
 	}
-	
+
 	public String toString() {
-		
+
 		String toString = "";
-		
+
 		for (int i = 0; i < length; i++) {
 			toString += getLink(i).getValue() + " -> ";
 		}
-		
+
 		return toString;
 	}
 
