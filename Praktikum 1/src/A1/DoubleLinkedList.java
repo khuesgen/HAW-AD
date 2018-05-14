@@ -154,8 +154,11 @@ public class DoubleLinkedList<E> implements IList<E> {
 	 */
 	@Override
 	public IList<E> concat(IList<E> list) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		for (int i = 0; i < list.getLength(); i++) {
+			this.insertAt(length, list.getElem(i));
+		}
+		return this;
 	}
 
 	/*
@@ -229,6 +232,15 @@ public class DoubleLinkedList<E> implements IList<E> {
 		public void setPrevious(Link previous) {
 			this.previous = previous;
 		}
+		
+		public Link getTail() {
+			return tail;
+		}
+		
+		public Link getHead() {
+			return head;
+		}
+
 
 	}
 
