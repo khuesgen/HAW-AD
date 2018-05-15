@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class ArrayList<E> implements IList<E> {
 
 	private E[] ary;
-	private final int ARRAY_LENGTH = 1;
+	private final int ARRAY_LENGTH = 0;
 
 	/**
 	 * Konstruktor mit übergebener Länge.
@@ -63,15 +63,10 @@ public class ArrayList<E> implements IList<E> {
 
 	@Override
 	public void clear() {
-<<<<<<< HEAD
 		if (ary.length != 0) {
 			E[] temp = (E[]) Array.newInstance(this.ary[0].getClass(), 0);
 			ary = temp;
 		}
-=======
-		E[] temp = (E[]) Array.newInstance(this.ary[0].getClass(), 0);
-		ary = temp;
->>>>>>> be83d9cead42d523eb9a0afdb1dc151f4d9009f3
 	}
 
 	@Override
