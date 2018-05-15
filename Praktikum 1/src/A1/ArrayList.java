@@ -9,10 +9,22 @@ public class ArrayList<E> implements IList<E> {
 	private E[] ary;
 	private final int ARRAY_LENGTH = 1;
 
+	/**
+	 * Konstruktor mit übergebener Länge.
+	 * 
+	 * @param clazz
+	 * @param length
+	 */
 	public ArrayList(Class<E> clazz, int length) {
 		ary = (E[]) Array.newInstance(clazz, length);
 	}
 
+	/**
+	 * Konstruktor ohne übergebener Länge, diese wird dann dem Standartwert
+	 * zugewiesen.
+	 * 
+	 * @param clazz
+	 */
 	public ArrayList(Class<E> clazz) {
 		ary = (E[]) Array.newInstance(clazz, ARRAY_LENGTH);
 	}
@@ -109,6 +121,9 @@ public class ArrayList<E> implements IList<E> {
 		return this;
 	}
 
+	/**
+	 * Gibt die Liste in lesbarer Form zurück.
+	 */
 	public String toString() {
 		return Arrays.toString(ary);
 	}
