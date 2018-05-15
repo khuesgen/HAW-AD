@@ -63,9 +63,8 @@ public class ArrayList<E> implements IList<E> {
 
 	@Override
 	public void clear() {
-		for (int i = 0; i < ary.length; i++) {
-			ary[i] = null;
-		}
+		E[] temp = (E[]) Array.newInstance(this.ary[0].getClass(), 0);
+		ary = temp;
 	}
 
 	@Override
@@ -95,21 +94,20 @@ public class ArrayList<E> implements IList<E> {
 		// if (elem.getClass() != list.getClass()) {
 		// throw new IllegalArgumentException("Falscher Typ!");
 		// }
-
-		if (ary.length == index) {
-
-			@SuppressWarnings("unchecked")
-			E[] temp = (E[]) Array.newInstance(ary.getClass().getComponentType(), ary.length + 1);
-			for (int i = 0; i < ary.length; i++) {
-				temp[i] = ary[i];
-			}
-
-			ary = temp;
-
+		
+		E[] temp = (E[]) Array.newInstance(ary.getClass().getComponentType(), ary.length + 1);
+		int count = this.getLength();
+		
+		for (int i = 0; i < index; i++) {
+			temp[i] = getElem(i);
 		}
+		temp[index] = elem;
 
-		ary[index] = elem;
-
+		for (int i = index; i < count; i++) {
+			temp[i + 1] = getElem(i);
+		}
+		
+		ary = temp;
 	}
 
 	@Override
