@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class ArrayList<E> implements IList<E> {
 
 	private E[] ary;
-	private final int ARRAY_LENGTH = 1;
+	private final int ARRAY_LENGTH = 0;
 
 	/**
 	 * Konstruktor mit übergebener Länge.
