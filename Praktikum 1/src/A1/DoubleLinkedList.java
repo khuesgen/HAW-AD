@@ -174,7 +174,7 @@ public class DoubleLinkedList<E> implements IList<E> {
 		}
 
 		DoubleLinkedList<E> tempList = new DoubleLinkedList<E>();
-		for (int i = 0; i < i2; i++) {
+		for (int i = 0; i <= i2; i++) {
 			tempList.insertAt(i, this.getElem(i1 + i));
 		}
 
