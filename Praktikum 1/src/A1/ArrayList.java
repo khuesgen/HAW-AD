@@ -63,11 +63,10 @@ public class ArrayList<E> implements IList<E> {
 
 	@Override
 	public void clear() {
-		E[] temp = (E[]) Array.newInstance(this.ary[0].getClass(), 0);
-		ary = temp;
-//		for (int i = 0; i < ary.length; i++) {
-//			ary[i] = null;
-//		}
+		if (ary.length != 0) {
+			E[] temp = (E[]) Array.newInstance(this.ary[0].getClass(), 0);
+			ary = temp;
+		}
 	}
 
 	@Override
