@@ -61,6 +61,8 @@ public class Stack<T> {
 	 * Wertet Klammerausdrücke aus und gibt das Ergebniss zurück.
 	 * 
 	 * @param expression
+	 * @throws IllegalArgumentException
+	 * 		wenn der String nicht erlaubte Character enthält
 	 * @return
 	 */
 	public static int evalAlgExpression(String expression) {
@@ -74,6 +76,25 @@ public class Stack<T> {
 
 		for (int i = 0; i < expression.length(); i++) {
 			current = expression.substring(i, i+1);
+			
+			if (	!(current.equals(")") || 
+					current.equals("(") || 
+					current.equals("1") || 
+					current.equals("2") || 
+					current.equals("3") || 
+					current.equals("4") || 
+					current.equals("5") || 
+					current.equals("6") || 
+					current.equals("7") || 
+					current.equals("8") || 
+					current.equals("9") || 
+					current.equals("0") || 
+					current.equals("+") || 
+					current.equals("-") || 
+					current.equals("*") || 
+					current.equals("/"))) {
+				throw new IllegalArgumentException("Ungültiges Zeichen");
+			}
 
 			if (current.equals(")")) {
 
@@ -109,5 +130,6 @@ public class Stack<T> {
 	public static void main(String[] args) {
 		System.out.println(evalAlgExpression("(((1+2)*3)-(7*8))"));
 		System.out.println(evalAlgExpression("(((8*(4+2))+(5+1))"));
+		System.out.println(evalAlgExpression("P(((8*(4+2))+(5+1))"));
 	}
 }

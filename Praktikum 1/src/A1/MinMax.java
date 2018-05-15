@@ -12,7 +12,7 @@ public class MinMax {
 	 * Enthält den MinMax-Algorithmus, setzt die Instanzvariablen min und max
 	 * entsprechend.
 	 * 
-	 * @param ary
+	 * @param ary	Das zu überprüfende Array aus Ganzen Zahlen.
 	 */
 	public static void algo(int[] ary) {
 
