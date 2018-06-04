@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import A3.Searchcriteria.Column;
+
 public class Database {
 
 	public static String csvFile = "./resources/StaedteStatistik.csv";
@@ -44,7 +46,7 @@ public class Database {
 					String[] row = line.split(cvsSplitBy);
 
 					cd = parseRow(row, i);
-					System.out.println(cd);
+					// System.out.println(cd);
 					citylist.add(cd);
 
 					i++;
@@ -98,6 +100,81 @@ public class Database {
 		return new CityData(id, name, postcode, area, population, male, female);
 	}
 
+	public static int getData(int index, Column column) {
+
+		switch (column) {
+
+		case ZIP:
+			return citylist.get(index).getPostcode();
+
+		case AREA:
+			return (int) (citylist.get(index).getArea() * 100);
+
+		case POP:
+			return citylist.get(index).getPopulation();
+
+		case MPOP:
+			return citylist.get(index).getMale();
+
+		case FPOP:
+			return citylist.get(index).getFemale();
+
+		default:
+			return -1;
+
+		}
+	}
+
+	public static int binarySearchMin(Integer[] ary, Integer min, Column column) {
+
+		// if (ary[ary.length - 1] < min)
+		// return -1;
+
+		System.out.println("MIN");
+
+		int lowindex = 0;
+		int highindex = ary.length - 1;
+		int midindex;
+
+		while (lowindex <= highindex) {
+			midindex = lowindex + ((highindex - lowindex) / 2);
+			// System.out.println(getData(ary[midindex], column));
+			if (getData(ary[midindex], column) >= min) {
+				highindex = midindex - 1;
+			} else {
+				lowindex = midindex + 1;
+			}
+		}
+		System.out.println(highindex + 1);
+		return highindex + 1;
+		// return ary[highindex + 1];
+	}
+
+	public static int binarySearchMax(Integer[] ary, Integer max, Column column) {
+
+		// if (ary[0] > max)
+		// return -1;
+
+		System.out.println("MAX");
+
+		int lowindex = 0;
+		int highindex = ary.length - 1;
+		int midindex;
+
+		while (lowindex <= highindex) {
+			midindex = lowindex + ((highindex - lowindex) / 2);
+			// System.out.println(getData(ary[midindex], column));
+			if (getData(ary[midindex], column) > max) {
+				highindex = midindex - 1;
+			} else {
+				lowindex = midindex + 1;
+			}
+		}
+		System.out.println(lowindex - 1);
+		return lowindex - 1;
+		// return ary[lowindex - 1];
+	}
+
 	public static void presort() {
 
 		postcode = IntStream.rangeClosed(0, citylist.size() - 1).boxed().toArray(Integer[]::new);
@@ -147,7 +224,7 @@ public class Database {
 		});
 	}
 
-	public static Integer[] sortByPostcode(Integer[] ary, int min, int max) {
+	public static Integer[] sortByPostcode(Integer[] ary, Integer min, int max) {
 
 		Arrays.sort(ary, new Comparator<Integer>() {
 
@@ -162,39 +239,11 @@ public class Database {
 		int start = 0;
 		int end = ary.length - 1;
 
-		start = binarySearchPostcode(ary, min);
-		end = binarySearchPostcode(ary, max);
+		start = binarySearchMin(ary, min, Column.ZIP);
+		end = binarySearchMax(ary, max, Column.ZIP);
 
 		retary = Arrays.copyOfRange(ary, start, end);
 		return retary;
-	}
-
-	public static int binarySearchPostcode(Integer[] ary, Integer key) {
-
-		int retint = 0;
-
-		int u = 0;
-		int o = ary.length - 1;
-		int m;
-
-		while (u <= o) {
-			m = (u + o) / 2;
-			retint = m;
-			if (citylist.get(ary[m]).getPostcode() == key) {
-				retint = m;
-				count++;
-				break;
-			} else {
-				if (key < citylist.get(ary[m]).getPostcode()) {
-					o = m - 1;
-					count += 2;
-				} else {
-					u = m + 1;
-					count += 2;
-				}
-			}
-		}
-		return retint;
 	}
 
 	public static Integer[] sortByArea(Integer[] ary, int min, int max) {
@@ -212,132 +261,106 @@ public class Database {
 		int start = 0;
 		int end = ary.length - 1;
 
-		start = binarySearchArea(ary, min);
-		end = binarySearchArea(ary, max);
-
-		// TODO Fehler abfangen
-		System.out.println(start);
-		System.out.println(citylist.get(ary[start]).getArea());
-		System.out.println(end);
-		System.out.println(citylist.get(ary[end]).getArea());
+		start = binarySearchMin(ary, min * 100, Column.AREA);
+		end = binarySearchMax(ary, max * 100, Column.AREA);
 
 		retary = Arrays.copyOfRange(ary, start, end);
 		return retary;
 	}
 
-	public static int binarySearchArea(Integer[] ary, Integer min, Integer max) {
+	public static Integer[] sortByPopulation(Integer[] ary, Integer min, int max) {
 
-		if (ary[ary.length - 1] < min) {
-			return -1;
-		}
+		Arrays.sort(population, new Comparator<Integer>() {
 
-		int low = 0;
-		int high = ary.length - 1;
-
-		while (low <= high) {
-			int mid = low + ((high - low) / 2);
-
-			if (ary[mid] >= min)
-				high = mid - 1;
-			else // if(a[mid]<i)
-				low = mid + 1;
-		}
-
-		return high + 1;
-
-		
-		
-		
-		
-		
-		
-		int retint = 0;
-
-		int u = 0;
-		int o = ary.length - 1;
-		int m;
-
-		while (u <= o) {
-			m = (u + o) / 2;
-			retint = m;
-			if (citylist.get(ary[m]).getArea() == key) {
-				retint = m;
-				count++;
-				break;
-			} else {
-				if (key < citylist.get(ary[m]).getArea()) {
-					o = m - 1;
-					count += 2;
-				} else {
-					u = m + 1;
-					count += 2;
-				}
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return Integer.compare(citylist.get(o1).getPopulation(), citylist.get(o2).getPopulation());
 			}
-		}
-		return retint;
+		});
+
+		Integer[] retary;
+
+		int start = 0;
+		int end = ary.length - 1;
+
+		start = binarySearchMin(ary, min, Column.POP);
+		end = binarySearchMax(ary, max, Column.POP);
+
+		retary = Arrays.copyOfRange(ary, start, end);
+		return retary;
 	}
 
-	// public static Integer[] sortByPopulation(Integer[] ary, int min, int max) {
-	//
-	// Arrays.sort(ary, new Comparator<Integer>() {
-	//
-	// @Override
-	// public int compare(Integer o1, Integer o2) {
-	// return Integer.compare(citylist.get(o1).getPostcode(),
-	// citylist.get(o2).getPostcode());
-	// }
-	// });
-	//
-	// Integer[] retary;
-	//
-	// int start = 0;
-	// int end = ary.length -1;
-	//
-	// start = binarySearchPopulation(ary, min);
-	// end = binarySearchPopulation(ary, max);
-	//
-	// System.out.println(start);
-	// System.out.println(end);
-	//
-	//
-	// retary = Arrays.copyOfRange(ary, start, end);
-	// return retary;
-	// }
-	//
-	// public static int binarySearchPopulation(Integer[] ary, Integer key) {
-	//
-	// int retint = 0;
-	//
-	// int u = 0;
-	// int o = ary.length -1;
-	// int m;
-	//
-	// while (u <= o) {
-	// m = (u + o) / 2;
-	// retint = m;
-	// System.out.println(citylist.get(ary[m]).getPopulation());
-	// if (citylist.get(ary[m]).getPopulation() == key) {
-	// retint = m;
-	// count++;
-	// break;
-	// } else {
-	// if (key < citylist.get(ary[m]).getPopulation()) {
-	// o = m - 1;
-	// count += 2;
-	// } else {
-	// u = m + 1;
-	// count += 2;
-	// }
-	// }
-	// }
-	// return retint;
-	// }
+	public static Integer[] sortByFemale(Integer[] ary, Integer min, int max) {
+
+		Arrays.sort(female, new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return Integer.compare(citylist.get(o1).getFemale(), citylist.get(o2).getFemale());
+			}
+		});
+
+		Integer[] retary;
+
+		int start = 0;
+		int end = ary.length - 1;
+
+		start = binarySearchMin(ary, min, Column.FPOP);
+		end = binarySearchMax(ary, max, Column.FPOP);
+
+		retary = Arrays.copyOfRange(ary, start, end);
+		return retary;
+	}
+	
+	public static Integer[] sortByMale(Integer[] ary, Integer min, int max) {
+
+		Arrays.sort(male, new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return Integer.compare(citylist.get(o1).getMale(), citylist.get(o2).getMale());
+			}
+		});
+
+		Integer[] retary;
+
+		int start = 0;
+		int end = ary.length - 1;
+
+		start = binarySearchMin(ary, min, Column.MPOP);
+		end = binarySearchMax(ary, max, Column.MPOP);
+
+		retary = Arrays.copyOfRange(ary, start, end);
+		return retary;
+	}
 
 	public static void main(String[] args) {
 		loadData(0, 2057);
 		presort();
-		sortByPostcode(postcode, 50000, 60000);
-		sortByArea(area, 200, 500);
+
+		// for (int i : sortByPostcode(postcode, 50000, 60000)) {
+		// System.out.println(citylist.get(i).getPostcode());
+		// }
+		// sortByPostcode(postcode, 50000, 60000);
+
+		// for (int i : sortByArea(area, 200, 500)) {
+		// System.out.println(citylist.get(i).getArea());
+		// }
+		// sortByArea(area, 200, 500);
+
+		// for (int i : sortByPopulation(population, 90000, 500000)) {
+		// System.out.println(citylist.get(i).getPopulation());
+		// }
 		// sortByPopulation(population, 90000, 500000);
+
+		for (int i : sortByFemale(female, 30000, 40000)) {
+			System.out.println(citylist.get(i).getFemale());
+		}
+//		sortByFemale(female, 30000, 40000);
+
+//		for (int i : sortByMale(male, 20000, 30000)) {
+//			System.out.println(citylist.get(i).getMale());
+//		}
+//		sortByMale(male, 20000, 30000);
 	}
 }
