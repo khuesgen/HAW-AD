@@ -36,6 +36,9 @@ public class TestBBaum {
         baum.einfuegen(11, "11");
         System.out.println(baum);
         baum.einfuegen(24, "24");
+        
+        System.out.println("FINISHED");
+        
         System.out.println(baum);
         assertTrue(baum.validieren());
         assertEquals(7, baum.getAnzahlSchluessel());
