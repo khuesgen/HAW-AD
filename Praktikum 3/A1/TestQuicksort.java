@@ -21,7 +21,7 @@ public class TestQuicksort {
      */
     // TODO: Legen Sie hier eine Instanz Ihrer Implementierung an.
     Quicksort<Integer, String> qs = //null;
-            new QuicksortImpl<>(new PivotStrategyMedian());
+            new QuicksortImpl<>(new PivotStrategieMedian());
 
     private SchluesselWertPaar<Integer, String>[] generiereDaten(int anzahl, DatenGenerierung datenGenerierung) {
         SchluesselWertPaar<Integer, String>[] daten = new SchluesselWertPaar[anzahl];
@@ -44,7 +44,7 @@ public class TestQuicksort {
 
     @Test
     public void test() {
-        SchluesselWertPaar<Integer, String>[] daten = generiereDaten(10, DatenGenerierung.RUECKWAERTS);
+        SchluesselWertPaar<Integer, String>[] daten = generiereDaten(10, DatenGenerierung.ZUFALL);
         //ausgeben("vorher: ", daten);
 
         qs.sortiere(daten);
